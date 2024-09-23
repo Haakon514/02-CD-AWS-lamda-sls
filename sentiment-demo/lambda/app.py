@@ -6,8 +6,8 @@ def handler(event, context):
 
     client = boto3.client('comprehend')
     body = event["body"]
+    httpMethod = event["httpMethod"]
     sentiment = client.detect_sentiment(LanguageCode = "en", Text = body)
-    Sentiment["Sentiment"] = "POSITIVE"
 
     return {
             "statusCode": 200,
@@ -16,6 +16,6 @@ def handler(event, context):
             },
             "body": json.dumps({
                 "sentiment ": json.dumps(sentiment),
-                "Sentiment" : json.dumps(Sentiment)
+                "httpMethod": httpMethod
             })
     }
